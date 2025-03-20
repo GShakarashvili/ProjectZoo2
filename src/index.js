@@ -12,7 +12,9 @@ import {
 
 import { showDiets, totalFoodRequired } from './feeding.js';
 
-const mainMenu = () => {
+let action;
+
+while (action != 0) {
   console.log('Welcome to the Zoo Management System!');
   console.log('1. Display all animals');
   console.log('2. Add a new animal');
@@ -25,7 +27,7 @@ const mainMenu = () => {
   console.log('9. Show animals\' diets');
   console.log('0. Exit');
   
-  const action = getUserInput('Select an action: ');
+  action = getUserInput('Select an action: ');
 
   switch(action) {
     case '1':
@@ -70,12 +72,8 @@ const mainMenu = () => {
       break;
     case '0':
       console.log('Goodbye!');
-      return;
+      break;
     default:
       console.log('Invalid option, try again.');
   }
-
-  mainMenu(); 
-};
-
-mainMenu();
+}
