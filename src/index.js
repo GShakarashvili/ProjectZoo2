@@ -1,18 +1,8 @@
 import getUserInput from './utils.js';
-import {
-  displayAnimals,
-  addAnimal,
-  removeAnimal,
-  changeHealthStatus,
-  filterByHealthStatus,
-  filterBySpecies,
-  sortByAge,
-  sortByName,
-} from './zoo.js';
-
-import { showDiets, totalFoodRequired } from './feeding.js';
+import Zoo from './zoo.js';
 
 let action;
+const NewZoo = new Zoo;
 
 while (action != 0) {
   console.log('Welcome to the Zoo Management System!');
@@ -31,7 +21,7 @@ while (action != 0) {
 
   switch(action) {
     case '1':
-      displayAnimals();
+      NewZoo.displayAnimals();
       break;
     case '2':
       const id = parseInt(getUserInput('Enter ID: '));
@@ -40,35 +30,35 @@ while (action != 0) {
       const age = parseInt(getUserInput('Enter age: '));
       const healthStatus = getUserInput('Enter health status: ');
       const diet = getUserInput('Enter diet: ');
-      addAnimal(id, name, species, age, healthStatus, diet);
+      NewZoo.addAnimal(id, name, species, age, healthStatus, diet);
       break;
     case '3':
       const removeId = parseInt(getUserInput('Enter ID to remove: '));
-      removeAnimal(removeId);
+      NewZoo.removeAnimal(removeId);
       break;
     case '4':
       const changeId = parseInt(getUserInput('Enter ID to update: '));
       const newHealthStatus = getUserInput('Enter new health status: ');
-      changeHealthStatus(changeId, newHealthStatus);
+      NewZoo.changeHealthStatus(changeId, newHealthStatus);
       break;
     case '5':
       const healthStatusFilter = getUserInput('Enter health status to filter by: ');
-      filterByHealthStatus(healthStatusFilter);
+      NewZoo.filterByHealthStatus(healthStatusFilter);
       break;
     case '6':
       const speciesFilter = getUserInput('Enter species to filter by: ');
-      filterBySpecies(speciesFilter);
+      NewZoo.filterBySpecies(speciesFilter);
       break;
     case '7':
       const ascending = getUserInput('Sort by ascending or descending? (a/d): ') === 'a';
-      sortByAge(ascending);
+      NewZoo.sortByAge(ascending);
       break;
     case '8':
-      sortByName();
+      NewZoo.sortByName();
       break;
     case '9':
-      showDiets();
-      totalFoodRequired();
+      NewZoo.showDiets();
+      NewZoo.totalFoodRequired();
       break;
     case '0':
       console.log('Goodbye!');
