@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.3"
+  }
+}
