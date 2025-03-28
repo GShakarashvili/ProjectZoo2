@@ -1,37 +1,51 @@
-import animals from "./data.js";
+import Animal from "./animal.js";
+import animalsInterface from "../interfaces/animalsInterface";
+import ZooInterface from "../interfaces/zooInterface";
 
-class Zoo {
-  displayAnimals() {
-    if (animals.length === 0) {
+class Zoo implements ZooInterface {
+  private animals: animalsInterface[];
+
+  constructor(animals: animalsInterface[]) {
+    this.animals = animals;
+  }
+
+  displayAnimals(): void {
+    if (this.animals.length === 0) {
       console.log("No animals available.");
       return;
     }
 
     console.log("Animal List:");
-    animals.forEach((animal) => {
-      console.log(
-        `- ID: ${animal.id} | Name: ${animal.name} | Species: ${animal.species} | Age: ${animal.age} | Health Status: ${animal.healthStatus}`
-      );
-    });
+    this.animals.forEach((animal) => console.log(animal.getInfo()));
   }
 
-  addAnimal(id: number, name: any, species: any, age: number, healthStatus: any, diet: any) {
-    animals.push({ id, name, species, age, healthStatus, diet });
+  addAnimal(
+    id: number,
+    name: string,
+    species: string,
+    age: number,
+    healthStatus: string,
+    diet: string
+  ): void {
+    const newAnimal = new Animal(id, name, species, age, healthStatus, diet);
+    this.animals.push(newAnimal);
     console.log(`Added animal: ${name}`);
   }
 
-  removeAnimal(id: number) {
-    const index = animals.findIndex((animal) => animal.id === id);
+  removeAnimal(id: number): void {
+    const index = this.animals.findIndex((animal) => animal.id === id);
+
     if (index !== -1) {
-      const removed = animals.splice(index, 1);
+      const removed = this.animals.splice(index, 1);
       console.log(`Removed animal: ${removed[0].name}`);
     } else {
       console.log("Animal not found.");
     }
   }
 
-  changeHealthStatus(id: number, healthStatus: string) {
-    const animal = animals.find((animal) => animal.id === id);
+  changeHealthStatus(id: number, healthStatus: string): void {
+    const animal = this.animals.find((animal) => animal.id === id);
+
     if (animal) {
       animal.healthStatus = healthStatus;
       console.log(`Updated health status of ${animal.name} to ${healthStatus}`);
@@ -41,9 +55,10 @@ class Zoo {
   }
 
   filterByHealthStatus(status: string) {
-    const filteredAnimals = animals.filter(
+    const filteredAnimals = this.animals.filter(
       (animal) => animal.healthStatus === status
     );
+
     if (filteredAnimals.length === 0) {
       console.log(`No animals with health status: ${status}`);
     } else {
@@ -58,9 +73,10 @@ class Zoo {
   }
 
   filterBySpecies(species: string) {
-    const filteredAnimals = animals.filter(
+    const filteredAnimals = this.animals.filter(
       (animal) => animal.species === species
     );
+
     if (filteredAnimals.length === 0) {
       console.log(`No animals of species: ${species}`);
     } else {
@@ -75,7 +91,7 @@ class Zoo {
   }
 
   sortByAge(ascending = true) {
-    const sortedAnimals = [...animals].sort((a, b) =>
+    const sortedAnimals = [...this.animals].sort((a, b) =>
       ascending ? a.age - b.age : b.age - a.age
     );
     console.log(
@@ -90,7 +106,7 @@ class Zoo {
   }
 
   sortByName() {
-    const sortedAnimals = [...animals].sort((a, b) =>
+    const sortedAnimals = [...this.animals].sort((a, b) =>
       a.name.localeCompare(b.name)
     );
     console.log("Animals sorted by name:");
@@ -101,18 +117,18 @@ class Zoo {
   }
 
   showDiets = () => {
-    console.log('Animal Diets:');
-  
-    animals.forEach(animal => {
+    console.log("Animal Diets:");
+
+    this.animals.forEach((animal) => {
       console.log(`- Name: ${animal.name} | Diet: ${animal.diet}`);
     });
   };
-  
+
   // Calculate total food required (for simplicity, assume each animal eats 10kg of food per day)
   totalFoodRequired = () => {
-    const total = animals.length * 10; // 10kg per animal
+    const total = this.animals.length * 10; // 10kg per animal
     console.log(`Total food required for all animals: ${total}kg per day`);
   };
 }
 
-export default Zoo
+export default Zoo;

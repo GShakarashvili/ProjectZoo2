@@ -1,8 +1,18 @@
-import getUserInput from './utils.js';
-import Zoo from './zoo.js';
+import animalsInterface from './src/interfaces/animalsInterface';
+import Zoo from './src/classes/zoo.js';
+import Elephant from './src/classes/elephant.js';
+import Lion from './src/classes/lion.js';
+import Tiger from './src/classes/tiger.js';
+import getUserInput from './src/utils.js';
 
 let action: string | number = -1;
-const NewZoo = new Zoo;
+const animals: animalsInterface[] = [
+    new Tiger(1, "Tigger", 5, "healthy"),
+    new Lion(2, "Leo", 8, "sick"),
+    new Elephant(3, "Ellie", 2, "quarantine"),
+];
+
+const NewZoo = new Zoo(animals);
 
 while (action != 0) {
   console.log('Welcome to the Zoo Management System!');
@@ -30,6 +40,7 @@ while (action != 0) {
       const age = parseInt(getUserInput('Enter age: '));
       const healthStatus = getUserInput('Enter health status: ');
       const diet = getUserInput('Enter diet: ');
+
       NewZoo.addAnimal(id, name, species, age, healthStatus, diet);
       break;
     case '3':
